@@ -1,0 +1,845 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/kontur-light.css" id="theme">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal/css/highlight/idea-for-light.css">
+    <link rel="stylesheet" href="reveal/css/highlight/darkula-for-dark.css">
+    <!--[if lt IE 9]>
+    <script src="reveal/js/html5shiv.js"></script>
+    <![endif]-->
+	<script defer src="reveal/js/head.min.js"></script>
+	<script defer src="reveal/js/reveal.js"></script>
+	<script defer src="reveal/initialize.js"></script>
+	<script defer src="reveal/js/d3.min.js"></script>
+
+    <style>
+        .width25 {
+            width: 25%;
+        }
+
+        .width30 {
+            width: 30%;
+        }
+
+        .width40 {
+            width: 40%;
+        }
+
+        .width50 {
+            width: 50%;
+        }
+
+        .width75 {
+            width: 75%;
+        }
+
+        .width100 {
+            width: 100%;
+        }
+
+        .border {
+            border: black solid 3px !important;
+        }
+
+        .flex {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+		
+		.flex-column {
+			flex-direction: column;
+		}
+		
+		.flex-row {
+			flex-direction: row;
+		}
+
+        .flex .row {
+            width: auto;
+        }
+
+        .flex .item {
+            margin: auto;
+        }
+
+		.fragment-container {
+			position: relative;
+		}
+		
+		.fragment-container .fragment {
+			position: absolute;
+			top: 0px;
+			width: 100%;
+		}
+    </style>
+
+	<script>
+        function configureExternalLinks() {
+            var host  = location.host.replace("www.", "");
+            var hostRegExp = new RegExp(host, "i");                
+            var a = document.getElementsByTagName('a');
+            for (var i = 0; i < a.length; i++) {
+                var href = a[i].host;
+                if(!host || !hostRegExp.test(href)) {
+                    a[i].setAttribute('target', '_blank');
+                }
+            }
+        };
+
+		function revealConfigure(defaultConfiguration) {
+			return defaultConfiguration;
+		}
+
+		function revealReady(event) {
+            configureExternalLinks();
+		}
+	</script>
+	
+	<title>Fronend Starter Tutorial</title>
+</head>
+<body>
+
+<div class="reveal"><div class="slides"
+  data-separator="^\r?\n---\r?\n$"
+  data-separator-vertical="^\r?\n\*\*\*\r?\n$"
+  data-attributes="\slide:\s*?(\S.+?)$"
+  data-element-attributes="\$\s*?(.+?)$"
+  >
+
+
+<section data-markdown><script type="text/template">
+
+<div class="flex">
+    <img class="width25" src="assets/logo.png" alt="Образовательные программы СКБ Контур" title="Образовательные программы СКБ Контур">
+</div>
+# Frontend Starter Tutorial
+
+---
+
+## Как пользоваться?
+
+- Туториал разбит на шаги. Каждый шаг -- ветка в репозитории
+- После выполнения очередного шага нужно переключиться на следующую ветку
+- Можно сразу перейти на интересующий шаг: не забудь выполнить `npm install` для дозагрузки зависимостей
+- Чтобы увидеть все доступные этапы, посмотри на список веток `git branch` или список коммитов `git log --pretty=oneline`
+
+<div class="flex flex-column">
+  <div>__Для начала склонируй репозиторий__</div>
+  <div>[frontend-starter-sandbox](https://github.com/kontur-csharper/frontend-starter-sandbox)</div>
+</div>
+
+---
+
+<div class="flex"><img class="width50" src="assets/penguins.png"></div>
+## Поехали!
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+# Шаг 1
+
+<div class="flex"><span>Переключись на ветку `step1`, чтобы продолжить</span></div>
+
+---
+
+## Node.js
+
+- Node.js -- среда выполнения JavaScript с движком V8 от Google
+- Она позволяет запускать JavaScript вне браузера
+- Движок V8 поддерживает Just-In-Time-компиляцию JavaScript, обеспечивая высокую производительность
+
+Разработку Node.js начал Райан Дал (англ. Ryan Dahl) в 2009 году
+
+<div class="flex"><img class="width25" src="assets/nodejs.png"></div>
+
+***
+
+1. Установи последнюю версию http://nodejs.org
+2. Открой консоль и перейди в директорию этого проекта
+3. Запусти `node src/index.js`
+
+***
+
+### В Node.js доступны различные API
+- [process](https://nodejs.org/api/process.html) -- информация и контроль текущего процесса Node.js
+- [console](https://nodejs.org/api/console.html) -- ввод/вывод на консоль
+- [fs](https://nodejs.org/api/fs.html) -- файловая система
+- [path](https://nodejs.org/api/path.html) -- построение путей в разных ОС
+- [os](https://nodejs.org/api/os.html) -- особенности ОС
+- [http](https://nodejs.org/api/http.html) -- http клиент и сервер
+- и [другие](https://nodejs.org/api/)
+
+[Набор свойств](https://nodejs.org/api/globals.html) глобального объекта Node.js отличается такового в глобальном объекте `window` браузера
+
+---
+
+## Модули
+
+Модули на уровне языка появились только в стандарте ES2015
+
+Поэтому программисты выкручивались разными способами:
+- Шаблон [Модуль](https://learn.javascript.ru/closures-module), использующий замыкание
+- _AMD_ (Asynchronous Module Definition) -- шаблон модуля, позволяющий загружать модули асинхронно. Использует функцию require
+- _CommonJS_ -- шаблон модуля с синхронной загрузкой модулей. Стал популярен благодаря Node.js
+- _UMD_ -- модуль в таком формате можно подключить и в CommonJS-модуле, и в AMD-модуле
+
+[Обзор](https://habrahabr.ru/company/yandex/blog/192874/#es2015-modules-2015) эволюции модулей в JavaScript 
+
+***
+
+### Модули в Node.js
+
+1. Изучи файлы `src/index.js`, `src/emoji.js`
+
+Так создаются и используются модули в Node.js  
+Шаблон описания называется _CommonJS_
+
+***
+
+### Модули ES2015
+
+А так выглядят модули согласно стандарту ES2015
+```js
+// calculator/main.js
+// calculator/lib/calc.js
+let notExported = 'abc';
+export function square(x) {
+    return x * x;
+}
+export const MY_CONSTANT = 123;
+
+// calculator/main.js
+import { square } from 'lib/calc';
+console.log(square(3));
+```
+
+***
+
+Модуль может экспортировать что-то по умолчанию
+```js
+// myapp/models/Customer.js
+export default class { // анонимный класс
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+};
+
+// myapp/myapp.js
+import Customer from 'models/Customer';
+let customer = new Customer(0, 'Jane');
+```
+
+---
+
+## Node Package Manager
+
+- Пакетный менеджер для Node.js
+- Содержит свыше 280 000 пакетов
+- Устанавливается вместе с Node.js
+
+<div class="flex"><img class="width25" src="assets/npm.png"></div>
+
+***
+
+### Semantic Versioning
+
+Пакеты в npm получают версии, согласно  [semver](http://semver.org/)
+
+Пример версии -- `2.11.165-beta`
+
+В номере версии `MAJOR.MINOR.PATCH` увеличивается
+- MAJOR-версия, при добавлении несовместимых изменений API
+- MINOR-версия, при добавлении функциональности с сохранением обратной совместимости
+- PATCH-версию, при исправлении багов
+
+Можно добавлять метки для предрелизов и метаинформации
+
+***
+
+1. В корневой папке выполни `npm init`. Соглашайся на все значения по умолчанию. В результате npm создаст файл с конфигурацией пакета -- `package.json`
+2. Установи пару пакетов с указанием версии `npm install mocha@3.2 should@11.1 --save-dev` --
+эти библиотеки вскоре понадобятся
+3. Загляни в папку `node_modules` -- там установленные модули
+4. Список зависимостей от других пакетов хранится в `package.json`. Убедись, что `package.json` зафиксирована зависимость от установленных пакетов
+
+***
+
+Разделы `package.json`, отвечающие за зависимости
+- `dependencies` -- пакеты, которые нужны всегда. При установке добавляем флаг `--save`
+- `devDependencies` -- пакеты, которые нужны только для разработки. При установке добавляем флаг `--save-dev`
+- `peerDependencies` -- требования к другим зависимостям. Так пакет с плагином для jQuery может потребовать, чтобы его устанавливали только вместе с jQuery 3.0 и выше
+
+***
+
+Пакеты можно устанавливать в локальную папку
+```bash
+npm install mocha
+```
+
+или глобально: они попадут в `%APPDATA%\npm\node_modules`
+```bash
+npm install mocha -g
+```
+
+***
+
+В реальной разработке, если проект не новый, то все нужные пакеты уже записаны в package.json.
+
+Остается только запустить команду `npm i` (это краткая запись для `npm install`) и все зависимости из package.json
+установятся с указанными версиями библиотек
+
+[Подробности](https://docs.npmjs.com/) про npm и package.json
+
+---
+
+## Unit-тестирование
+
+1. Изучи файл `tests/emojiSpec.js`
+2. Две библиотеки для unit-тестирования:
+[mocha](https://mochajs.org/) и [should](https://shouldjs.github.io/) -- уже установлены
+3. Поэтому просто запусти тесты  
+`node node_modules\mocha\bin\mocha tests\*`
+
+<div class="flex"><img class="width25" src="assets/mocha.png"></div>
+
+***
+
+### Быстрый запуск
+
+1. Настрой запуск тестов через npm, чтобы не писать каждый раз длинную команду
+```js
+//Поправь в package.json
+"scripts": { "test": "mocha tests/* & exit 0" }
+```
+2. А теперь запусти тесты из консоли командой `npm test`
+3.  Заметь, что в скриптах npm можно не указывать путь до mocha:  
+  - npm догадается, что mocha -- это пакет из node_modules
+  - в package.json пакета mocha указано какой из скриптов выполнять по умолчанию
+
+***
+
+### Больше тестов
+
+1. Создай еще какой-нибудь тест из запусти `npm test`
+
+---
+
+## Результаты шага 1
+
+1. Node.js позволяет выполнять JavaScript вне браузера
+2. Модули CommonJS используется в Node.js
+3. В стандарт ES2015 добавлены модули  
+4. NPM -- пакетный менеджер Node.js  
+  - Устанавливает пакеты
+  - Отслеживает зависимости
+  - Позволяет создавать сокращения для команд
+5. Библиотеки Mocha и Should позволяют писать unit-тесты
+
+<div class="flex"><span>Итоговый код в ветке `step1-finished`</span></div>
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+# Шаг 2
+
+<div class="flex"><span>Переключись на ветку `step2`, чтобы продолжить</span></div>
+
+---
+
+## Webpack
+
+Модули -- это прекрасно!  
+Но как потом их использовать на html-страницах?
+
+1. Попробуй открыть `index.html` в браузере
+2. Открой Dev Tools (F12) -- вкладка Console показывает ошибку `"require is not defined"`
+
+`require` определен только в Node.js.  
+Браузеры ничего не знают про него.  
+Эту проблему решает _Webpack_
+
+<div class="flex"><img class="width25" src="assets/webpack.png"></div>
+
+***
+
+### Webpack -- это сборщик модулей
+
+<div class="flex"><img class="width100" src="assets/webpack-build.png"></div>
+
+<div class="flex" style="text-align: center">
+    <div class="item">удобная при разработке<br>модульная структура</div>
+    <div class="item" style="font-size: 60px;">➔</div>
+    <div class="item">несколько файлов<br>для браузера</div>
+</div>
+
+***
+
+### Точки расширения Webpack
+
+- _loaders_ позволяют подавать на вход файлы различных форматов:
+  - написаны для популярных форматов
+  - e.g. компиляция в JavaScript
+  - e.g. компиляция less, saas, stylus в css
+- _plugins_ управляют дальнейшими преобразованиями:
+  - минимизация
+  - объединение множества файлов в один
+  - разделеление на бандлы
+- _конфигурирование_ для разных окружений:
+  - разработки
+  - тестирования
+  - продакшена
+
+***
+
+### Использование Webpack
+
+1. Выполни `npm i`: в package.json уже добавлены все нужные пакеты
+2. Создай в корне файл `webpack.config.js` по [документации](https://webpack.js.org/guides/get-started/#using-webpack-with-a-config)
+  - в `entry` укажи `./src/index.js`
+  - в `output.filename` -- `bundle.js`
+  - в `output.path` -- `path.resolve(__dirname, 'build')`
+3. Создай еще один скрипт в packages.json для запуска webpack
+```js
+//Добавь в package.json
+"scripts": { "build": "webpack & exit 0" }
+```
+4. Выполни `npm run build`. После этой команды в папке `build` должен появиться `bundle.js`
+5. Подключи в html-файле `build/bundle.js` вместо `index.js` и открой `index.html` в браузере
+6. Все должно сработать!
+
+***
+
+### Source Map
+
+Отлаживать непонятный bundle.js в браузере неприятно. Поэтому сгенерируй sourcemap
+
+1. Для этого в  `webpack.config.js` добавь  
+поле `devtool: "source-map"` в объект конфигурации
+2. Запусти еще раз `npm run build`. Должен появиться файл `build/bundle.js.map`
+3. В браузере на вкладке Sources в Dev Tools должны появиться отдельные js модули.
+4. Попробуй их поотлаживать.
+
+[Полная документация по Webpack](https://webpack.js.org/)
+
+---
+
+## Dev-Server
+
+Dev-Server -- это сервер, удобный при разработке
+
+Он может автоматически перезапускать сборку webpack'ом
+и перезагружать страницу при изменении исходных файлов
+
+Воспользуемся им!
+
+***
+
+1. Добавь скрипт start в package.json для запуска webpack-dev-server
+```js
+//Добавь в package.json
+"scripts": { "start": "webpack-dev-server" }
+```
+2. `npm run start` и открой в браузере http://localhost:8080
+3. Поменяй что-нибудь в исходниках и посмотри как ведет себя dev-server
+
+---
+
+## Babel
+
+Браузеры и даже Node.js часто не знают новомодных фич ES2015 и более поздних версий.
+Можно ли их использовать?
+
+Можно с помощью [Babel](https://babeljs.io/),  
+превращающего новый JS в старый
+
+Babel -- это _транспайлер_  
+Это как компилятор, только структура программы не меняется
+
+<p class="center" style="width: 30%; margin:auto;">
+	![alt Babel](assets/babel.png "Babel")
+</p>
+
+***
+
+1. Команда `npm i`
+установила _babel-loader_ в Webpack, и набор настроек (_preset_)
+к нему, чтобы понимать все новинки ES2015
+2. Сконфигурируй babel, как сказано в документации:
+  - открой https://babeljs.io/docs/setup/#installation
+  - в первом пункте выбери _Webpack_
+3. Воспользуйся какой-нибудь новинкой ES2015 в коде  
+  - Например, поменяй вызовы `require` и `module.exports` на новые
+  [import](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import) и
+  [export](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/export)
+  - Посмотри, в какой код это превратилось внутри bundle.js  
+4. Запусти тесты -- они перестали работать, потому что Node.js еще не поддерживает новый синтаксис import/export.
+5. Как запускать babel еще и перед тестами посмотри [там же](https://babeljs.io/docs/setup/#installation)
+  - на этот раз выбери _Mocha_ в первом пункте
+  - придется _поправить команду_ в script, установить _npm-пакет_, подключить пресет `es2015` через файл `.babelrc`
+
+***
+
+### Babel Presets
+
+_Пресет_ -- набор правил преобразования
+
+- Для разных версий языка: _es2015_, _es2016_, _es2017_
+- Поддержка наборов фич, предложенных комитету [TC-39](https://github.com/tc39/proposals):  
+_stage-0_, _stage-1_, _stage-2_, _stage-3_
+- Синтаксический сахар библиотек: _react_, _flow_
+- С конкретными фичами: _es2015-modules-commonjs_,  
+_es2015-arrow-functions_
+
+[Здесь](https://babeljs.io/docs/plugins/) можно посмотреть список пресетов
+
+А в [песочнице](https://babeljs.io/repl/#?evaluate=true&presets=es2015%2Creact%2Cstage-2) можно поиграться с разными пресетами
+
+---
+
+## Результаты шага 2
+
+1. Webpack собирает из множества модулей несколько файлов, для подключения в браузере
+2. Dev-Server обеспечивает пересборку, при внесении изменений
+3. Babel делает доступными новейшие фичи языка
+  - есть готовые пресеты, но можно написать свой
+  - подключается отдельно: для браузера, для тестов, для Node.js
+
+<div class="flex"><span>Итоговый код в ветке `step2-finished`</span></div>
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+# Шаг 3
+
+<div class="flex"><span>Переключись на ветку `step3`, чтобы продолжить</span></div>
+
+---
+
+## ESLint
+
+<div class="flex">Конфигурируемая статическая проверка кода</div>
+
+<div class="flex"><img class="width25" src="assets/eslint.png"></div>
+
+***
+
+### Конфигурирование проверок
+
+ESLint поставляется с коллекцией проверок
+
+Кроме того, можно установить плагины с дополнительными проверками, либо написать свои
+
+По умолчанию все проверки выключены -- можно включать только нужные
+
+ESLint поддерживает разные форматы конфигурирования:
+- .eslintrc.json // с поддержкой комментариев
+- .eslintrc.js
+- .eslintrc.yaml
+- Поле "eslint" в package.json
+
+***
+
+1. Выполни `npm i`, чтобы установить новые пакеты: `eslint@3.8`, `eslint-plugin-import@2.0`, `eslint-loader@1.6`
+2. Изучи файл `.eslintrc.json` с конфигурацией проверок
+3. Настрой запуск ESLint через npm
+```js
+//Добавь в package.json
+"scripts": { "lint": "eslint . & exit 0" }
+```
+4. Выполни `npm run lint` -- ESLint сообщит об ошибках
+
+***
+
+### Игнорирование
+
+Возможный источник ошибок -- проверка ненужных файлов:
+- чужого кода в node_modules
+- результатов сборки
+- специфичных файлов
+
+
+1. Изучи файл `.eslintignore` -- в нем описываются правила игнорирования при проверке
+2. Добавь в него строчку `build/*`, чтобы результаты сборки не проверялись
+3. Выполни `npm run lint` -- не должно быть ошибок в папке build
+
+***
+
+### Указание среды выполнения
+
+Одна из ошибок -- `'describe' is not defined` в тестах
+
+ESLint не знает, что код теста будет выполняться mocha и describe будет определен
+
+1. Добавь mocha в поле `"env"` в `.eslintrc.json`
+```json
+"env": {
+    "mocha": true
+}
+```
+2. Выполни `npm run lint` -- должна остаться последняя ошибка
+
+***
+
+### Отключение правил через комментарии
+
+Последняя ошибка -- `'should' is assigned a value but never used  no-unused-vars`
+
+Один из вариантов с ней справиться -- игнорировать
+
+1. Добавь в emojiSpec.js такие комментарии
+```js
+/* eslint-disable no-unused-vars */
+var should = require('should');
+/* eslint-enable no-unused-vars */
+```
+2. Выполни `npm run lint` -- теперь нет ошибок!
+
+***
+
+### Исправление ошибки
+
+А сообщение об ошибке было верным...
+
+1. Убери комментарии отключающие правила и удали ненужную переменную
+```js
+require('should');
+```
+2. Убедись, что нет ошибок -- `npm run lint`
+3. Убедись, что тесты работают -- `npm test`
+
+***
+
+### Проверки при построении
+
+1. Добавь дополнительный loader для JavaScript в `webpack.config.js`. Порядок лоадеров имеет значение!
+```js
+rules: [
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: ["babel-loader", "eslint-loader"]
+    }
+]
+```
+2. Добавь в начало `emoji.js` эти строчки
+```js
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+console.log();
+```
+3. Запусти `npm run build` и получи ошибку при построении!
+4. Обрати внимание! Способ запуска ESLint теперь другой, а конфигурация используется та же: из `.eslint.json`
+
+***
+
+### Проверки при написании кода
+
+Чтобы ошибки проверялись при написании кода надо подключить ESLint к твоей любимой IDE
+
+Тебе повезло, если твоя любимая IDE -- это _Visual Studio Code_.
+Просто скачай расширение [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) и все заработает.
+
+Поищи в Settings по фразе ESLint и поставь 1 галочку, чтобы включить ESLint в _WebStorm_
+
+Скорее всего в других средах разработки на JS сложность такая же
+
+_Enjoy ;-)_
+
+---
+
+## Результаты шага 3
+
+ESLint статически проверяет код, при этом
+  - гибко конфигурируется
+  - сообщает об ошибках при построении
+  - встраивается в среды разработки
+
+<div class="flex"><span>Итоговый код в ветке `step3-finished`</span></div>
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+# Шаг 4
+
+<div class="flex"><span>Переключись на ветку `step4`, чтобы продолжить</span></div>
+
+---
+
+## Компонентный подход в UI
+
+***
+
+### HTML был создан для документов...
+
+<div class="flex"><img class="width40 border" src="assets/html.jpg"></div>
+
+__... а не для разработки приложений__
+
+***
+
+#### Стили
+
+_CSS_ -- позволил менять тему оформления
+
+Темы удобно хранить в отдельных файлах и переиспользовать
+
+#### Сценарии
+
+_JS_ -- добавил элементарные действия
+
+Хранение скриптов в отдельных файлах ~~отделяет мух от котлет~~ правильно с точки зрения хорошего дизайна
+
+***
+
+### Компоненты
+
+Приложения удобно собирать из более крупных кирпичиков, чем теги HTML: один раз описываешь логику -- много раз используешь
+
+<div class="flex"><img class="width75 border" src="assets/components.jpg"></div>
+
+***
+
+_Компонент_ -- это кирпичик, совмещающий разметку, стили и логику, а также использующий другие компоненты
+
+Разделение UI на компоненты десятилетиями применяется в десктопных приложениях.
+Было создано множество библиотек и даже специальный язык разметки -- XAML
+
+Компонентный подход пришел в веб вместе с веб-приложениями и реализуется во многих фреймворках:
+- Angular
+- Ember
+- Knockout
+- React
+- Vue
+
+---
+
+## React
+
+Библиотека от Facebook для реализации View из паттерна MVC
+
+<div class="flex"><img class="width25" src="assets/react.png"></div>
+
+***
+
+1. `npm i` -- в package.json добавлены React, его пресет для Babel и плагин для ESLint: они требуются для поддержки языка jsx и самого React
+2. Подключи пресет `react` в `.babelrc`
+3. Измени `module` в `webpack.config.js` так, чтобы jsx-файлы тоже обрабатывались Babel.
+Там же поменяй `entry` на index.jsx
+4. Подключи плагин `react` в `.eslintrc` и включи новые правила
+```js
+// Добавь дополнительное значение в массив extends
+"extends": ["plugin:react/recommended"]
+// Настрой одно из правил
+"react/prop-types": ["error", { "skipUndeclared": true }]
+// Добавь поддержку jsx
+"parserOptions": { "ecmaFeatures": { "jsx": true }
+```
+5. Собери проект, все должно заработать!
+
+***
+
+1. Изучи App.jsx и MessageList.jsx
+  - Так определяются React-компоненты на языке jsx
+  - Babel с пресетом react умеет превращать jsx в js
+2. Изучи index.jsx -- так компонент можно рендерить в html
+3. [Подробнее](https://facebook.github.io/react/docs/getting-started.html) про React
+
+---
+
+## Стили компонентов
+
+Компонентный подход предлагает носить стили рядом с компонентами. Как это делать?
+
+***
+
+1. Команда `npm i` установила пакеты для загрузки стилей: css-loader и style-loader
+2. В webpack.config.js в массив rules добавь такой объект:
+```js
+{ test: /\.css$/, loader: "style-loader!css-loader?modules" }
+```
+3. Раскомментируй подключение подготовленного файла стилей в MessageList.jsx
+4. В MessageList.jsx измени класс message у div на такой:
+```html
+<div className={styles.message} .../>
+```
+5. Собери проект и изучи стили в инспекторе браузера:
+  - Имена классов "испортились", чтобы гарантированно не конфликтовать с одноименными классами других компонентов
+6. Вынеси код рендеринга одного сообщения в отдельный React компонент Message.jsx
+
+---
+
+## Результаты шага 4
+
+1. Удобно разбивать UI веб-приложений на компоненты
+2. Компонент -- объединяет разметку, стили и логику  
+Все составные части компонента находятся в одной папке
+3. React и Webpack позволяет использовать компонентный подход
+
+<div class="flex"><span>Итоговый код в ветке `step4-finished`</span></div>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+# Шаг 5
+
+<div class="flex"><span>Переключись на ветку `step5`, чтобы продолжить</span></div>
+
+---
+
+## Material-UI
+
+Набор готовых React-компонент, реализующих стиль Material Design
+
+<div class="flex"><img class="width25" src="assets/material.png"></div>
+
+> Когда хочется красиво, а верстать не хочется --  
+> можно не верстать
+>  
+> Один опытный бэкендер
+
+***
+
+1. `npm i` поставит библиотеку material-ui
+2. Изучи App.jsx -- там пример использование компонента [AppBar](http://www.material-ui.com/v0.16.7/#/components/app-bar)
+3. Переведи MessageList на использование компонента List внутри Card, а Message -- на использование [ListItem](http://www.material-ui.com/v0.16.7/#/components)
+4. Создай еще один компонент MessageBox.jsx с полем ввода и кнопкой Send
+5. Сделай так, чтобы MessageBox по нажатию Send генерировал событие onSend
+6. Подпиши на это событие MessageList так, чтобы новое сообщение появлялось в списке
+
+---
+
+## Результаты шага 5
+
+1. Для React доступны библиотеки готовых компонент.  
+Material-UI -- одна из них
+
+<div class="flex"><span>Итоговый код в ветке `step5-finished`</span></div>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+## Продолжение следует...
+
+</script></section>
+
+
+</div></div>
+</body>
+</html>
