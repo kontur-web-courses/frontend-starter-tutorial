@@ -192,7 +192,7 @@
 - [http](https://nodejs.org/api/http.html) -- http клиент и сервер
 - и [другие](https://nodejs.org/api/)
 
-[Набор свойств](https://nodejs.org/api/globals.html) глобального объекта Node.js отличается такового в глобальном объекте `window` браузера
+[Набор свойств](https://nodejs.org/api/globals.html) глобального объекта Node.js отличается от такового в глобальном объекте `window` браузера
 
 ---
 
@@ -267,7 +267,7 @@ let customer = new Customer(0, 'Jane');
 
 ### Semantic Versioning
 
-Пакеты в npm получают версии, согласно  [semver](http://semver.org/)
+Пакеты в npm получают версии, согласно [семантическому версионированию](http://semver.org/)
 
 Пример версии -- `2.11.165-beta`
 
@@ -295,12 +295,12 @@ let customer = new Customer(0, 'Jane');
 
 ***
 
-Пакеты можно устанавливать в локальную папку
+Пакеты можно устанавливать в папку с проектом
 ```bash
 npm install mocha
 ```
 
-или глобально: они попадут в `%APPDATA%\npm\node_modules`
+или глобально в вашу систему — они попадут в `%APPDATA%\npm\node_modules`
 ```bash
 npm install mocha -g
 ```
@@ -655,7 +655,7 @@ rules: [
 console.log();
 ```
 3. Запусти `npm run build` и получи ошибку при построении!
-4. Обрати внимание! Способ запуска ESLint теперь другой, а конфигурация используется та же: из `.eslint.json`
+4. Обрати внимание! Способ запуска ESLint теперь другой, а конфигурация используется та же: из `.eslintrc.json`
 
 ***
 
@@ -754,14 +754,14 @@ _Компонент_ -- это кирпичик, совмещающий разм
 2. Подключи пресет `react` в `.babelrc`
 3. Измени `module` в `webpack.config.js` так, чтобы jsx-файлы тоже обрабатывались Babel.
 Там же поменяй `entry` на index.jsx
-4. Подключи плагин `react` в `.eslintrc` и включи новые правила
+4. Подключи плагин `react` в `.eslintrc.json` и включи новые правила
 ```js
 // Добавь дополнительное значение в массив extends
 "extends": ["plugin:react/recommended"]
 // Настрой одно из правил
 "react/prop-types": ["error", { "skipUndeclared": true }]
 // Добавь поддержку jsx
-"parserOptions": { "ecmaFeatures": { "jsx": true }
+"parserOptions": { "ecmaFeatures": { "jsx": true } }
 ```
 5. Собери проект, все должно заработать!
 
@@ -771,7 +771,7 @@ _Компонент_ -- это кирпичик, совмещающий разм
   - Так определяются React-компоненты на языке jsx
   - Babel с пресетом react умеет превращать jsx в js
 2. Изучи index.jsx -- так компонент можно рендерить в html
-3. [Подробнее](https://facebook.github.io/react/docs/getting-started.html) про React
+3. [Подробнее](https://facebook.github.io/react/docs/hello-world.html) про React
 
 ---
 
