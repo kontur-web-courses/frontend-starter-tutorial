@@ -1,7 +1,2 @@
-# Reveal Tutorial
 
----
-
-## Как пользоваться?
-1. Склонируйте репозиторий.
-2. Следуйте инструкциям в `tutorial.html`.
+# [Start](https://kontur-csharper.github.io/frontend-starter-tutorial)
