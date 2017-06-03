@@ -104,7 +104,7 @@
 		}
 	</script>
 	
-	<title>Fronend Starter Tutorial</title>
+	<title>Frontend Starter Tutorial</title>
 </head>
 <body>
 
@@ -253,6 +253,16 @@ import Customer from 'models/Customer';
 let customer = new Customer(0, 'Jane');
 ```
 
+***
+
+#### Обрати внимание
+
+- При импорте _дефолтных_ значений, функций или классов из файла, фигурные скобки указывать не надо
+- При импорте _недефолтных_ значений, импорт содержит фигурные скобки
+
+[Статья](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import) о синтаксе импортов
+
+
 ---
 
 ## Node Package Manager
@@ -281,7 +291,7 @@ let customer = new Customer(0, 'Jane');
 ***
 
 1. В корневой папке выполни `npm init`. Соглашайся на все значения по умолчанию. В результате npm создаст файл с конфигурацией пакета -- `package.json`
-2. Установи пару пакетов с указанием версии `npm install mocha@3.2 should@11.1 --save-dev` --
+2. Установи пару пакетов с указанием версии `npm install mocha@3.2 chai@3.5 --save-dev` --
 эти библиотеки вскоре понадобятся
 3. Загляни в папку `node_modules` -- там установленные модули
 4. Список зависимостей от других пакетов хранится в `package.json`. Убедись, что `package.json` зафиксирована зависимость от установленных пакетов
@@ -318,13 +328,24 @@ npm install mocha -g
 
 ## Unit-тестирование
 
-1. Изучи файл `tests/emojiSpec.js`
-2. Две библиотеки для unit-тестирования:
-[mocha](https://mochajs.org/) и [should](https://shouldjs.github.io/) -- уже установлены
-3. Поэтому просто запусти тесты  
-`node node_modules\mocha\bin\mocha tests\*`
+Две библиотеки для unit-тестирования:
+[mocha](https://mochajs.org/) и [chai](http://chaijs.com/) -- уже установлены
+
+Mocha — фреймворк для unit-тестирования, он запускает тесты и предоставляет методы для их описания (такие как
+describe и it).
+
+Chai — библиотека ассертов. С помощью chai можно писать более человекочитаемые тесты. Например:
+`expect(tea).to.have.property('flavors')`
 
 <div class="flex"><img class="width25" src="assets/mocha.png"></div>
+
+***
+
+### Запуск тестов
+
+1. Изучи файл `tests/emojiSpec.js`
+2. Запусти тесты с помощью mocha
+`node node_modules\mocha\bin\mocha tests\*`
 
 ***
 
@@ -344,7 +365,10 @@ npm install mocha -g
 
 ### Больше тестов
 
-1. Создай еще какой-нибудь тест из запусти `npm test`
+1. Создай тест, проверяющий замену нескольких смайликов
+2. Запусти `npm test`
+3. Тест должен упасть
+4. Почини тест (добавь флаг `g` в регулярном выражении в файле emoji.js)
 
 ---
 
@@ -409,7 +433,8 @@ npm install mocha -g
 - _plugins_ управляют дальнейшими преобразованиями:
   - минимизация
   - объединение множества файлов в один
-  - разделеление на бандлы
+  - разделеление на бандлы ("куски кода", например, бандл со всеми библиотеками или бандл с кодом для какой-то одной
+страницы)
 - _конфигурирование_ для разных окружений:
   - разработки
   - тестирования
@@ -435,6 +460,29 @@ npm install mocha -g
 
 ***
 
+### Отладка
+
+1. Код в браузере, как и любой другой нуждается в отладке. Чтобы посмотреть, как выглядят ошибки и как их отладить, в
+файле `emoji.js` соверши опечатку в слове `replace`
+2. Пересобери проект командой `npm run build`
+3. В браузере, на вкладке с index.html открой инструменты разработчика (клавиша `F12`, [обзор Chrome
+DevTools](https://developers.google.com/web/tools/chrome-devtools/))
+4. Перезагрузи вкладку index.html с открытыми инструментами разработчика
+5. На вкладке Console должна появиться ошибка
+<div class="flex"><img src="assets/error.png"></div>
+6. Если кликнуть на ссылку с названием файла и номером строки (в моем случае это `bundle.js:74`), то браузер покажет
+эту строку на вкладке Source
+
+
+***
+
+### Замечание
+
+При разработке этого курса в качестве браузера использовался Google Chrome. Если ты предпочитаешь другой браузер,
+узнай о том, как пользоваться в нем инструментами разработчика самостоятельно.
+
+***
+
 ### Source Map
 
 Отлаживать непонятный bundle.js в браузере неприятно. Поэтому сгенерируй sourcemap
@@ -443,7 +491,8 @@ npm install mocha -g
 поле `devtool: "source-map"` в объект конфигурации
 2. Запусти еще раз `npm run build`. Должен появиться файл `build/bundle.js.map`
 3. В браузере на вкладке Sources в Dev Tools должны появиться отдельные js модули.
-4. Попробуй их поотлаживать.
+4. Теперь из ошибки в консоли можно попасть прямо в код исходного файла. Попробуй!
+5. Теперь можно пофиксить ошибку
 
 [Полная документация по Webpack](https://webpack.js.org/)
 
@@ -460,11 +509,16 @@ Dev-Server -- это сервер, удобный при разработке
 
 ***
 
+1. В файле `webpack.config.js` дополни конфигурацию `output`:
+    ```js
+    // Дополни output в webpack.config.js
+    publicPath: 'build'
+    ```
 1. Добавь скрипт start в package.json для запуска webpack-dev-server
-```js
-//Добавь в package.json
-"scripts": { "start": "webpack-dev-server" }
-```
+    ```js
+    // Добавь в package.json
+    "scripts": { "start": "webpack-dev-server" }
+    ```
 2. `npm run start` и открой в браузере http://localhost:8080
 3. Поменяй что-нибудь в исходниках и посмотри как ведет себя dev-server
 
@@ -487,21 +541,40 @@ Babel -- это _транспайлер_
 
 ***
 
+### Конфигурация Babel
+
 1. Команда `npm i`
 установила _babel-loader_ в Webpack, и набор настроек (_preset_)
 к нему, чтобы понимать все новинки ES2015
-2. Сконфигурируй babel, как сказано в документации:
-  - открой https://babeljs.io/docs/setup/#installation
-  - в первом пункте выбери _Webpack_
-3. Воспользуйся какой-нибудь новинкой ES2015 в коде  
-  - Например, поменяй вызовы `require` и `module.exports` на новые
-  [import](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import) и
-  [export](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/export)
-  - Посмотри, в какой код это превратилось внутри bundle.js  
+2. Допиши в webpack.config.js
+    ```js
+    module: {
+        rules: [
+            { test: /\.js$/, exclude: /node_modules/, use: ["babel-loader"] }
+        ]
+    }
+    ```
+3. Создай файл `.babelrc` в корне проекта, в нем надо указать установленный пресет:
+    ```js
+    {
+        "presets": ["es2015"]
+    }
+    ```
+Подробности об использовании Babel с разными библиотеками: https://babeljs.io/docs/setup/#installation
+
+***
+
+### Использование Babel
+1. Воспользуйся новинкой ES2015 в коде, чтобы посмотреть, как работает babel
+    - Поменяй вызовы `require` и `module.exports` на новые
+        [import](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import) и
+        [export](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/export)
+    - Посмотри, в какой код это превратилось внутри bundle.js
+    - Проверь, что все работает в браузере
 4. Запусти тесты -- они перестали работать, потому что Node.js еще не поддерживает новый синтаксис import/export.
-5. Как запускать babel еще и перед тестами посмотри [там же](https://babeljs.io/docs/setup/#installation)
-  - на этот раз выбери _Mocha_ в первом пункте
-  - придется _поправить команду_ в script, установить _npm-пакет_, подключить пресет `es2015` через файл `.babelrc`
+5. Как запускать babel еще и перед тестами посмотри в [документации](https://babeljs.io/docs/setup/#installation)
+    - выбери _Mocha_ в первом пункте
+    - нужно только _поправить команду_ в script
 
 ***
 
@@ -568,10 +641,11 @@ ESLint поддерживает разные форматы конфигурир
 ***
 
 1. Выполни `npm i`, чтобы установить новые пакеты: `eslint@3.8`, `eslint-plugin-import@2.0`, `eslint-loader@1.6`
-2. Изучи файл `.eslintrc.json` с конфигурацией проверок
+2. Изучи файл `.eslintrc.json` с конфигурацией проверок ([документация
+ESLint](http://eslint.org/docs/user-guide/configuring))
 3. Настрой запуск ESLint через npm
 ```js
-//Добавь в package.json
+// Добавь в package.json
 "scripts": { "lint": "eslint . & exit 0" }
 ```
 4. Выполни `npm run lint` -- ESLint сообщит об ошибках
@@ -604,36 +678,7 @@ ESLint не знает, что код теста будет выполнятьс
     "mocha": true
 }
 ```
-2. Выполни `npm run lint` -- должна остаться последняя ошибка
-
-***
-
-### Отключение правил через комментарии
-
-Последняя ошибка -- `'should' is assigned a value but never used  no-unused-vars`
-
-Один из вариантов с ней справиться -- игнорировать
-
-1. Добавь в emojiSpec.js такие комментарии
-```js
-/* eslint-disable no-unused-vars */
-var should = require('should');
-/* eslint-enable no-unused-vars */
-```
-2. Выполни `npm run lint` -- теперь нет ошибок!
-
-***
-
-### Исправление ошибки
-
-А сообщение об ошибке было верным...
-
-1. Убери комментарии отключающие правила и удали ненужную переменную
-```js
-require('should');
-```
-2. Убедись, что нет ошибок -- `npm run lint`
-3. Убедись, что тесты работают -- `npm test`
+2. Выполни `npm run lint` -- не должно остаться ошибок!
 
 ***
 
@@ -643,15 +688,13 @@ require('should');
 ```js
 rules: [
     {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: ["babel-loader", "eslint-loader"]
+      test: /\.js$/, exclude: /node_modules/, use: ["babel-loader", "eslint-loader"]
     }
 ]
 ```
-2. Добавь в начало `emoji.js` эти строчки
+2. Посмотри, как выглядят ошибки при сборке. Добавь в начало `emoji.js` эти строчки
 ```js
-/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+/*eslint no-console*/
 console.log();
 ```
 3. Запусти `npm run build` и получи ошибку при построении!
@@ -746,6 +789,10 @@ _Компонент_ -- это кирпичик, совмещающий разм
 
 Библиотека от Facebook для реализации View из паттерна MVC
 
+[Документация](https://facebook.github.io/react/docs/hello-world.html) React ([на русском](https://abraxabra.ru/react.js/bystryy-start/))
+
+[Краткое описание](http://siteacademy.ru/jquery/reactjs-overview)
+
 <div class="flex"><img class="width25" src="assets/react.png"></div>
 
 ***
@@ -771,7 +818,6 @@ _Компонент_ -- это кирпичик, совмещающий разм
   - Так определяются React-компоненты на языке jsx
   - Babel с пресетом react умеет превращать jsx в js
 2. Изучи index.jsx -- так компонент можно рендерить в html
-3. [Подробнее](https://facebook.github.io/react/docs/hello-world.html) про React
 
 ---
 
@@ -784,7 +830,7 @@ _Компонент_ -- это кирпичик, совмещающий разм
 1. Команда `npm i` установила пакеты для загрузки стилей: css-loader и style-loader
 2. В webpack.config.js в массив rules добавь такой объект:
 ```js
-{ test: /\.css$/, loader: "style-loader!css-loader?modules" }
+{ test: /\.css$/, use: ["style-loader", "css-loader?modules"] }
 ```
 3. Раскомментируй подключение подготовленного файла стилей в MessageList.jsx
 4. В MessageList.jsx измени класс message у div на такой:
@@ -832,9 +878,14 @@ _Компонент_ -- это кирпичик, совмещающий разм
 1. `npm i` поставит библиотеку material-ui
 2. Изучи App.jsx -- там пример использование компонента [AppBar](http://www.material-ui.com/v0.16.7/#/components/app-bar)
 3. Переведи MessageList на использование компонента List внутри Card, а Message -- на использование [ListItem](http://www.material-ui.com/v0.16.7/#/components)
-4. Создай еще один компонент MessageBox.jsx с полем ввода и кнопкой Send
-5. Сделай так, чтобы MessageBox по нажатию Send генерировал событие onSend
-6. Подпиши на это событие MessageList так, чтобы новое сообщение появлялось в списке
+4. Создай еще один компонент MessageBox.jsx с [полем ввода](http://www.material-ui.com/v0.16.7/#/components/text-field) и [кнопкой
+Send](http://www.material-ui.com/v0.16.7/#/components/raised-button)
+5. Сделай так, чтобы MessageBox по нажатию Send вызывал функцию onSend, переданную ему в пропсах из MessageList. Как
+обрабатывать клики прочитай [тут](https://abraxabra.ru/react.js/bystryy-start/react-js-obrabotka-sobytiy/). Как
+передавать свойства читай [тут](https://abraxabra.ru/react.js/bystryy-start/react-js-komponenty-i-svoystva/)
+6. MessageList должен просто передать в MessageBox функцию onSend, которую сам получит от App.
+6. Заставь App при вызове функции onSend делать так, чтобы новое сообщение появлялось в списке. Как обновлять стейт
+написано [тут, раздел "Правильное использование состояния"](https://abraxabra.ru/react.js/bystryy-start/react-js-sostoyanie-i-zhiznennyy-tsikl/)
 
 ---
 
